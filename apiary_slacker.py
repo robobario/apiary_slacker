@@ -4,10 +4,24 @@ import os.path
 import json
 import sys 
 
-apis = ["useragentapi"]
+apis = [
+"useragentapi",
+"advertiser1",
+"goalsservice",
+"ibidapi",
+"vertigoteam",
+"pixelevent",
+"productdatafeedapi",
+"rtbloggingapi",
+"useragentapi",
+"cataloguedatafeed",
+"bidoptimisationapiv2",
+"bidoptimisationapi",
+"adscaleopenrtb"
+]
 for api in apis:
-  old_file = api + ".old"
-  new_file = api + ".new"
+  old_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), api + ".old")
+  new_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), api + ".new")
   new_out = open(new_file,'w')
   sh.apiary(["fetch", "--api-name", api], _out=new_out)
   if not os.path.isfile(old_file):
@@ -21,7 +35,7 @@ for api in apis:
     premessage = "api " + titleurl + " changed"
     print message
     payload = {
-        "channel":"#testing-webhooks",
+        "channel":"#vertigo",
         "username":"apiarybot",
         "text": premessage,
         "icon_emoji":":ghost:",
@@ -41,3 +55,5 @@ for api in apis:
     payload = "payload=" + json.dumps(payload)
     print(payload)
     sh.curl(["curl", "-X", "POST" ,"--data-urlencode" ,payload,sys.argv[1]])
+  else:
+    print("no diff found for " + api)
