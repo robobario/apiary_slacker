@@ -8,3 +8,4 @@ rude script to push notification to slacker when apiary api changes
 * apiaryio gem
 * apiary API key in env
 * curl
+* sh python lib
